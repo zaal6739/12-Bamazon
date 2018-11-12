@@ -28,7 +28,7 @@ var connection = mysql.createConnection({
     for (var j = 0; j < arrayLength; j++) {
     //displays what is for sale
     console.log('---------------------------')
-    console.log('Product ID: ' + res[j].item_id+' Product Name: ' + res[j].product_name + ' Product Price: ' + res[j].price);
+    console.log('Product ID: ' + res[j].item_id+' Product Name: ' + res[j].product_name + ' Product Price: ' + res[j].price + ' Quantity: ' + res[j].stock_quantity);
     }  
      
 //    connection.end();
@@ -68,9 +68,11 @@ console.log('hit the arrow key for prompts');
       function(err,res) {
         if (err) throw err;
        
-        if (requestedQuantity > res.stock_quantity)
+        if (requestedQuantity > res[0].stock_quantity)
         {
-          console.log('Sorry, out of stock.  There are only '+res.stock_quantity+'items left!');
+          console.log('Sorry, out of stock.  There are only '+res[0].stock_quantity+' items left! \n');
+
+          displayAllItems();
         } 
         else 
         {
@@ -80,9 +82,24 @@ console.log('hit the arrow key for prompts');
          
           var totalCost = res[0].price * requestedQuantity;
 
-          console.log('Your total cost is: '+ totalCost);
+          console.log('Your total cost is: $'+ totalCost);
 
         }
-     })
+     }); 
+  
  
   }
+
+
+  // function playRound() {
+
+  //   // We create a list prompt. Specifying that the user must pick a random number between 1 and 5.
+  //   inquirer.prompt([
+  //     {
+  //       type: "list",
+  //       name: "userGuess",
+  //       message: "Would you like to purchase another Item?",
+  //       choices: ['YES','NO']
+  //     }
+  
+  //   ]).then(function(res) {
